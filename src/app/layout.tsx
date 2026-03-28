@@ -13,9 +13,6 @@ const fontSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Present - Smart Attendance",
   description: "Next-generation smart attendance solution with BLE proximity and secure identity.",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
