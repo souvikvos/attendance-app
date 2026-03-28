@@ -1,158 +1,145 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect, useRef } from 'react';
-import { useTheme } from "next-themes";
-import { Sun, Moon, Download } from "lucide-react";
+import React, { useEffect, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { Menu, X, Home, Info, Download } from "lucide-react"
 
-const AnimatedNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
-    const defaultTextColor = 'text-gray-300';
-    const hoverTextColor = 'text-white';
-    const textSizeClass = 'text-sm';
+const ICONS = {
+    Home: Home,
+    Features: Info,
+    "Download APK": Download
+}
 
-    return (
-        <a href={href} className={`group relative inline-block overflow-hidden h-5 flex items-center ${textSizeClass}`}>
-            <div className="flex flex-col transition-transform duration-400 ease-out transform group-hover:-translate-y-1/2">
-                <span className={defaultTextColor}>{children}</span>
-                <span className={hoverTextColor}>{children}</span>
-            </div>
-        </a>
-    );
-};
+const NAV_ITEMS = [
+    { name: "Home", url: "top" },
+    { name: "Features", url: "features-section" },
+    { name: "Download APK", url: "download-section" },
+]
 
 export function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [headerShapeClass, setHeaderShapeClass] = useState('rounded-full');
-    const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false)
+    const [activeTab, setActiveTab] = useState("Home")
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     useEffect(() => {
-        setMounted(true);
-    }, []);
+        const handleScroll = () => setIsScrolled(window.scrollY > 50)
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
-    useEffect(() => {
-        if (shapeTimeoutRef.current) {
-            clearTimeout(shapeTimeoutRef.current);
-        }
-
-        if (isOpen) {
-            setHeaderShapeClass('rounded-xl');
+    const scrollToIndex = (id: string) => {
+        if (id === "top") {
+            window.scrollTo({ top: 0, behavior: "smooth" })
         } else {
-            shapeTimeoutRef.current = setTimeout(() => {
-                setHeaderShapeClass('rounded-full');
-            }, 300);
-        }
-
-        return () => {
-            if (shapeTimeoutRef.current) {
-                clearTimeout(shapeTimeoutRef.current);
+            if (id === "features-section") {
+                window.scrollTo({ top: 3500, behavior: "smooth" });
+            } else if (id === "download-section") {
+                window.scrollTo({ top: 7200, behavior: "smooth" });
+            } else {
+                document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
             }
-        };
-    }, [isOpen]);
+        }
+    }
 
-    const logoElement = (
-        <div className="flex items-center gap-2.5">
-            <div className="relative w-7 h-7 flex items-center justify-center">
-                <img
-                    src="/logo.png"
-                    alt="Present Logo"
-                    className="w-full h-full object-contain filter brightness-110 drop-shadow-[0_0_8px_rgba(16,185,129,0.3)] transition-all duration-300 group-hover:scale-110"
-                />
-            </div>
-            <span className="text-white font-bold tracking-tight text-base uppercase bg-gradient-to-r from-white to-emerald-200 bg-clip-text text-transparent">
-                Present
-            </span>
-        </div>
-    );
-
-    const navLinksData = [
-        { label: 'Home', href: '/' },
-        { label: 'Features', href: '#features' },
-        { label: 'About', href: '#about' },
-    ];
-
-    const themeToggleElement = (
-        <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-gray-300 hover:text-white"
-            aria-label="Toggle theme"
-        >
-            {mounted && theme === "dark" ? (
-                <Sun className="w-4 h-4" />
-            ) : (
-                <Moon className="w-4 h-4" />
-            )}
-        </button>
-    );
-
-    const downloadButtonElement = (
-        <a
-            href="/present-attendance-dummy.apk"
-            download="present-attendance.apk"
-            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-black bg-gradient-to-br from-emerald-100 to-emerald-300 rounded-full hover:from-emerald-200 hover:to-emerald-400 transition-all duration-200 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
-        >
-            <Download className="w-3.5 h-3.5" />
-            <span>Download APK</span>
-        </a>
-    );
+    const showExpanded = !isScrolled || isMenuOpen
 
     return (
-        <header className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50
-                       flex flex-col items-center
-                       pl-6 pr-6 py-3 backdrop-blur-md
-                       ${headerShapeClass}
-                       border border-white/10 bg-[#0a0a0acc]
-                       w-[calc(100%-2rem)] sm:w-auto
-                       transition-[border-radius] duration-0 ease-in-out`}>
+        <nav className="fixed top-0 left-0 right-0 z-[99999] pointer-events-none p-4 md:p-8">
+            <div className="relative w-full max-w-7xl mx-auto flex items-start justify-between">
+                
+                {/* 1. Left Corner Pill (Logo) */}
+                <motion.div
+                    className="bg-zinc-100/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-black/10 dark:border-white/10 px-4 py-2 rounded-full shadow-xl pointer-events-auto flex items-center gap-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{
+                        opacity: (isScrolled && !isMenuOpen) ? 1 : 0,
+                        x: (isScrolled && !isMenuOpen) ? 0 : -20,
+                        scale: (isScrolled && !isMenuOpen) ? 1 : 0.8,
+                        pointerEvents: (isScrolled && !isMenuOpen) ? "auto" : "none"
+                    }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
+                    <span className="font-black text-lg italic tracking-tighter text-black dark:text-white">Present</span>
+                </motion.div>
 
-            <div className="flex items-center justify-between w-full gap-x-8 sm:gap-x-12">
-                <div className="flex items-center shrink-0">
-                    {logoElement}
+                {/* 2. CENTER PILL */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-0 flex flex-col items-center pointer-events-none">
+                    <motion.div
+                        className="bg-zinc-100/95 dark:bg-zinc-900/95 border border-black/10 dark:border-white/10 backdrop-blur-3xl p-1.5 rounded-full shadow-2xl pointer-events-auto flex items-center"
+                        initial={{ opacity: 1, y: 0 }}
+                        animate={{
+                            opacity: showExpanded ? 1 : 0,
+                            y: showExpanded ? 0 : -20,
+                            scale: showExpanded ? 1 : 0.9,
+                            pointerEvents: showExpanded ? "auto" : "none"
+                        }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    >
+                        <div className="px-4 border-r border-black/10 dark:border-white/10 hidden sm:flex items-center gap-3">
+                            <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
+                            <span className="font-black text-xl italic tracking-tighter text-black dark:text-white leading-none">Present</span>
+                        </div>
+
+                        <div className="flex items-center mx-1">
+                            {NAV_ITEMS.map((item) => {
+                                const Icon = ICONS[item.name as keyof typeof ICONS]
+                                const isActive = activeTab === item.name
+                                return (
+                                    <button
+                                        key={item.name}
+                                        onClick={() => {
+                                            scrollToIndex(item.url);
+                                            setActiveTab(item.name);
+                                            setIsMenuOpen(false);
+                                        }}
+                                        className={cn(
+                                            "relative px-4 md:px-6 py-2.5 rounded-full font-bold transition-all text-sm flex items-center justify-center",
+                                            isActive ? "text-black dark:text-white" : "text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
+                                        )}
+                                    >
+                                        {isActive && <motion.div layoutId="active-nav-bg" className="absolute inset-0 bg-emerald-500/20 rounded-full" />}
+                                        <span className="hidden md:inline relative z-10">{item.name}</span>
+                                        <span className="md:hidden relative z-10 flex items-center gap-2">
+                                            <Icon size={18} />
+                                            {isActive && <span className="text-[10px] uppercase font-black">{item.name}</span>}
+                                        </span>
+                                    </button>
+                                )
+                            })}
+                        </div>
+
+                        <div className="pl-1.5 ml-1 border-l border-black/10 dark:border-white/10 flex items-center">
+                            <ThemeToggle className="hover:bg-emerald-500/10 text-black dark:text-white" />
+                        </div>
+                    </motion.div>
                 </div>
 
-                <nav className="hidden lg:flex items-center space-x-8 text-sm">
-                    {navLinksData.map((link) => (
-                        <AnimatedNavLink key={link.href} href={link.href}>
-                            {link.label}
-                        </AnimatedNavLink>
-                    ))}
-                </nav>
-
-                <div className="hidden md:flex items-center gap-3">
-                    {downloadButtonElement}
-                    {themeToggleElement}
-                </div>
-
-                <button className="md:hidden flex items-center justify-center w-8 h-8 text-gray-300 focus:outline-none" onClick={toggleMenu} aria-label={isOpen ? 'Close Menu' : 'Open Menu'}>
-                    {isOpen ? (
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    ) : (
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                {/* 3. Right Corner Pill (Hamburger / Close) */}
+                <motion.button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className={cn(
+                        "bg-zinc-100/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-black/10 dark:border-white/10 p-4 rounded-full shadow-xl pointer-events-auto transition-colors",
+                        isMenuOpen && "bg-emerald-500/10 border-emerald-500/30"
                     )}
-                </button>
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{
+                        opacity: isScrolled ? 1 : (isMenuOpen ? 1 : 0),
+                        x: isScrolled ? 0 : (isMenuOpen ? 0 : 20),
+                        scale: isScrolled ? 1 : 0.8,
+                        pointerEvents: (isScrolled || isMenuOpen) ? "auto" : "none"
+                    }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {isMenuOpen ? (
+                        <X size={24} className="text-emerald-500 rotate-0 hover:rotate-90 transition-transform duration-300" />
+                    ) : (
+                        <Menu size={24} className="text-black dark:text-white" />
+                    )}
+                </motion.button>
             </div>
-
-            <div className={`md:hidden flex flex-col items-center w-full transition-all ease-in-out duration-300 overflow-hidden
-                       ${isOpen ? 'max-h-[1000px] opacity-100 pt-4' : 'max-h-0 opacity-0 pt-0 pointer-events-none'}`}>
-                <nav className="flex flex-col items-center space-y-4 text-base w-full pb-6 border-b border-white/5">
-                    {navLinksData.map((link) => (
-                        <a key={link.href} href={link.href} className="text-gray-300 hover:text-white transition-colors w-full text-center">
-                            {link.label}
-                        </a>
-                    ))}
-                </nav>
-                <div className="flex flex-col items-center gap-4 mt-6 w-full pb-4">
-                    {downloadButtonElement}
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <span>Switch Theme</span>
-                        {themeToggleElement}
-                    </div>
-                </div>
-            </div>
-        </header>
-    );
+        </nav>
+    )
 }

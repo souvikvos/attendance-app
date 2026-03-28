@@ -325,7 +325,7 @@ export function CinematicHero({
             </div>
 
             {/* BACKGROUND LAYER 2: Tactile CTA Buttons */}
-            <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
+            <div id="download-section" className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
                 <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-silver-matte">
                     {ctaHeading}
                 </h2>
@@ -333,7 +333,7 @@ export function CinematicHero({
                     {ctaDescription}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6">
-                    <a href="/present-attendance-dummy.apk" download="present-attendance.apk" aria-label="Download Android APK" className="btn-modern-dark flex items-center justify-center gap-3 px-8 py-4 rounded-[1.25rem] group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-background">
+                    <a href="/Present.apk" download="Present.apk" aria-label="Download Android APK" className="btn-modern-dark flex items-center justify-center gap-3 px-8 py-4 rounded-[1.25rem] group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-background">
                         <svg className="w-7 h-7 transition-transform group-hover:scale-105" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                         </svg>
@@ -345,6 +345,7 @@ export function CinematicHero({
             {/* FOREGROUND LAYER: The Physical Deep Blue Card */}
             <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none" style={{ perspective: "1500px" }}>
                 <div
+                    id="features-section"
                     ref={mainCardRef}
                     className="main-card premium-depth-card relative overflow-hidden gsap-reveal flex items-center justify-center pointer-events-auto w-[92vw] md:w-[85vw] h-[92vh] md:h-[85vh] rounded-[32px] md:rounded-[40px]"
                 >
