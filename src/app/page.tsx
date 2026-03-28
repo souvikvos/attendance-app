@@ -1,12 +1,17 @@
 import { CinematicHero } from "@/components/ui/cinematic-landing-hero";
+import { NeoMinimalFooter } from "@/components/ui/neo-minimal-footer";
+import { Navbar } from "@/components/ui/mini-navbar";
+import { StarsBackground } from "@/components/ui/stars-background";
 
 export default function Home() {
   return (
-    <main className="overflow-x-hidden w-full min-h-screen">
+    <main className="relative overflow-x-hidden w-full min-h-screen">
+      <StarsBackground />
+      <Navbar />
       <CinematicHero
-        brandName="BLE-Check"
-        tagline1="Seamless check-ins,"
-        tagline2="zero friction."
+        brandName="Present"
+        tagline1="Stop the roll call."
+        tagline2="Just be present."
         cardHeading="Effortless Attendance."
         cardDescription={
           <>
@@ -18,6 +23,7 @@ export default function Home() {
         ctaHeading="Download & Go."
         ctaDescription="Experience immediate, proximity-based attendance tracking. Install our Android app and never wait in a roll-call line again."
       />
+      <NeoMinimalFooter />
     </main>
   );
 }

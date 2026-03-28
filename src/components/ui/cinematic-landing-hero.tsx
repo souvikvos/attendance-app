@@ -22,8 +22,8 @@ const INJECTED_STYLES = `
   .bg-grid-theme {
       background-size: 60px 60px;
       background-image: 
-          linear-gradient(to right, color-mix(in srgb, var(--color-foreground) 5%, transparent) 1px, transparent 1px),
-          linear-gradient(to bottom, color-mix(in srgb, var(--color-foreground) 5%, transparent) 1px, transparent 1px);
+          linear-gradient(to right, color-mix(in srgb, #10b981 15%, transparent) 1px, transparent 1px),
+          linear-gradient(to bottom, color-mix(in srgb, #0ea5e9 15%, transparent) 1px, transparent 1px);
       mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
       -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
   }
@@ -35,9 +35,6 @@ const INJECTED_STYLES = `
   /* OUTSIDE THE CARD: Theme-aware text (Shadow in Light Mode, Glow in Dark Mode) */
   .text-3d-matte {
       color: var(--color-foreground);
-      text-shadow: 
-          0 10px 30px color-mix(in srgb, var(--color-foreground) 20%, transparent), 
-          0 2px 4px color-mix(in srgb, var(--color-foreground) 10%, transparent);
   }
 
   .text-silver-matte {
@@ -46,9 +43,6 @@ const INJECTED_STYLES = `
       -webkit-text-fill-color: transparent;
       background-clip: text;
       transform: translateZ(0); /* Hardware acceleration to prevent WebKit clipping bug */
-      filter: 
-          drop-shadow(0px 10px 20px color-mix(in srgb, var(--color-foreground) 15%, transparent)) 
-          drop-shadow(0px 2px 4px color-mix(in srgb, var(--color-foreground) 10%, transparent));
   }
 
   /* INSIDE THE CARD: Hardcoded Silver/White for the dark background, deep rich shadows */
@@ -65,12 +59,12 @@ const INJECTED_STYLES = `
 
   /* Deep Physical Card with Dynamic Mouse Lighting */
   .premium-depth-card {
-      background: linear-gradient(145deg, #162C6D 0%, #0A101D 100%);
+      background: linear-gradient(145deg, #0ea5e9 0%, #047857 100%);
       box-shadow: 
-          0 40px 100px -20px rgba(0, 0, 0, 0.9),
-          0 20px 40px -20px rgba(0, 0, 0, 0.8),
-          inset 0 1px 2px rgba(255, 255, 255, 0.2),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.8);
+          0 40px 100px -20px rgba(4, 120, 87, 0.7),
+          0 20px 40px -20px rgba(14, 165, 233, 0.5),
+          inset 0 1px 2px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.04);
       position: relative;
   }
@@ -144,19 +138,19 @@ const INJECTED_STYLES = `
       box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.1), inset 0 3px 6px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(0,0,0,0.02);
   }
   .btn-modern-dark {
-      background: linear-gradient(180deg, #27272A 0%, #18181B 100%);
+      background: linear-gradient(180deg, #34d399 0%, #059669 100%);
       color: #FFFFFF;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.6), 0 12px 24px -4px rgba(0,0,0,0.9), inset 0 1px 1px rgba(255,255,255,0.15), inset 0 -3px 6px rgba(0,0,0,0.8);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.2), 0 2px 4px rgba(4,120,87,0.4), 0 12px 24px -4px rgba(4,120,87,0.6), inset 0 1px 1px rgba(255,255,255,0.3), inset 0 -3px 6px rgba(0,0,0,0.3);
   }
   .btn-modern-dark:hover {
       transform: translateY(-3px);
-      background: linear-gradient(180deg, #3F3F46 0%, #27272A 100%);
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 6px 12px -2px rgba(0,0,0,0.7), 0 20px 32px -6px rgba(0,0,0,1), inset 0 1px 1px rgba(255,255,255,0.2), inset 0 -3px 6px rgba(0,0,0,0.8);
+      background: linear-gradient(180deg, #10b981 0%, #047857 100%);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.25), 0 6px 12px -2px rgba(4,120,87,0.5), 0 20px 32px -6px rgba(4,120,87,0.8), inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -3px 6px rgba(0,0,0,0.3);
   }
   .btn-modern-dark:active {
       transform: translateY(1px);
-      background: #18181B;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.05), inset 0 3px 8px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(0,0,0,0.5);
+      background: #059669;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.1), inset 0 3px 8px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(0,0,0,0.2);
   }
 
   .progress-ring {
@@ -272,7 +266,8 @@ export function CinematicHero({
                 )
                 .fromTo(".phone-widget", { y: 40, autoAlpha: 0, scale: 0.95 }, { y: 0, autoAlpha: 1, scale: 1, stagger: 0.15, ease: "back.out(1.2)", duration: 1.5 }, "-=1.5")
                 .to(".progress-ring", { strokeDashoffset: 60, duration: 2, ease: "power3.inOut" }, "-=1.2")
-                .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 2, ease: "expo.out" }, "-=2.0")
+                .to(".scanning-state", { autoAlpha: 0, scale: 0.5, duration: 0.4, ease: "power2.in" }, "-=0.2")
+                .fromTo(".success-state", { autoAlpha: 0, scale: 0.5 }, { autoAlpha: 1, scale: 1, duration: 0.8, ease: "back.out(1.5)" }, ">")
                 .fromTo(".floating-badge", { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 }, { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: "back.out(1.5)", duration: 1.5, stagger: 0.2 }, "-=2.0")
                 .fromTo(".card-left-text", { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: "power4.out", duration: 1.5 }, "-=1.5")
                 .fromTo(".card-right-text", { x: 50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 }, "<")
@@ -280,19 +275,28 @@ export function CinematicHero({
                 .set(".hero-text-wrapper", { autoAlpha: 0 })
                 .set(".cta-wrapper", { autoAlpha: 1 })
                 .to({}, { duration: 1.5 })
-                .to([".mockup-scroll-wrapper", ".floating-badge", ".card-left-text", ".card-right-text"], {
-                    scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: "power3.in", duration: 1.2, stagger: 0.05,
-                })
-                // Responsive card pullback sizing
+                // 1. Pullback: Scale the card down slightly to reveal the edges
                 .to(".main-card", {
                     width: isMobile ? "92vw" : "85vw",
                     height: isMobile ? "92vh" : "85vh",
                     borderRadius: isMobile ? "32px" : "40px",
                     ease: "expo.inOut",
-                    duration: 1.8
+                    duration: 2.0
                 }, "pullback")
-                .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.8 }, "pullback")
-                .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.5 });
+
+                // Add a scroll pause where it stays zoomed out momentarily
+                .to({}, { duration: 1.5 })
+
+                // 2. Slide Up: Move the card up while simultaneously fading out the UI
+                .to([".mockup-scroll-wrapper", ".floating-badge", ".card-left-text", ".card-right-text"], {
+                    scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: "power3.inOut", duration: 2.5, stagger: 0.05,
+                }, "slideup")
+                .to(".main-card", {
+                    y: -window.innerHeight - 300,
+                    ease: "expo.inOut",
+                    duration: 2.5
+                }, "slideup")
+                .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 2.5 }, "slideup");
 
         }, containerRef);
 
@@ -329,14 +333,11 @@ export function CinematicHero({
                     {ctaDescription}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6">
-                    <a href="attendance-app.apk" download aria-label="Download Android APK" className="btn-modern-dark flex items-center justify-center gap-3 px-8 py-4 rounded-[1.25rem] group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-background">
+                    <a href="/present-attendance-dummy.apk" download="present-attendance.apk" aria-label="Download Android APK" className="btn-modern-dark flex items-center justify-center gap-3 px-8 py-4 rounded-[1.25rem] group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-background">
                         <svg className="w-7 h-7 transition-transform group-hover:scale-105" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                         </svg>
-                        <div className="text-left">
-                            <div className="text-[10px] font-bold tracking-wider text-neutral-400 uppercase mb-[-2px]">Download App</div>
-                            <div className="text-xl font-bold leading-none tracking-tight">Android APK</div>
-                        </div>
+                        <span className="text-xl font-bold leading-none tracking-tight">Android APK</span>
                     </a>
                 </div>
             </div>
@@ -377,83 +378,98 @@ export function CinematicHero({
                                     <div className="absolute top-[170px] -right-[3px] w-[3px] h-[70px] hardware-btn rounded-r-md z-0 scale-x-[-1]" aria-hidden="true" />
 
                                     {/* Inner Screen Container */}
-                                    <div className="absolute inset-[7px] bg-[#050914] rounded-[2.5rem] overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,1)] text-white z-10">
-                                        <div className="absolute inset-0 screen-glare z-40 pointer-events-none" aria-hidden="true" />
+                                    <div className="absolute inset-[7px] bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.2)] dark:shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] text-slate-900 dark:text-white z-10 transition-colors">
+                                        <div className="absolute inset-0 screen-glare z-40 pointer-events-none opacity-40 dark:opacity-100" aria-hidden="true" />
 
                                         {/* Dynamic Island Notch */}
                                         <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-[100px] h-[28px] bg-black rounded-full z-50 flex items-center justify-end px-3 shadow-[inset_0_-1px_2px_rgba(255,255,255,0.1)]">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)] animate-pulse" />
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
                                         </div>
 
                                         {/* App Interface */}
                                         <div className="relative w-full h-full pt-12 px-5 pb-8 flex flex-col">
                                             <div className="phone-widget flex justify-between items-center mb-8">
                                                 <div className="flex flex-col">
-                                                    <span className="text-[10px] text-neutral-400 uppercase tracking-widest font-bold mb-1">Today</span>
-                                                    <span className="text-xl font-bold tracking-tight text-white drop-shadow-md">Journey</span>
+                                                    <span className="text-[10px] text-slate-400 dark:text-neutral-400 uppercase tracking-widest font-bold mb-1">Status</span>
+                                                    <span className="text-xl font-bold tracking-tight text-emerald-600 dark:text-emerald-400 drop-shadow-sm">Finding Beacon</span>
                                                 </div>
-                                                <div className="w-9 h-9 rounded-full bg-white/5 text-neutral-200 flex items-center justify-center font-bold text-sm border border-white/10 shadow-lg shadow-black/50">JS</div>
+                                                <div className="w-9 h-9 rounded-full bg-emerald-100 dark:bg-white/5 text-emerald-800 dark:text-neutral-200 flex items-center justify-center font-bold text-sm border border-emerald-200 dark:border-white/10 shadow-sm">P</div>
                                             </div>
 
-                                            <div className="phone-widget relative w-44 h-44 mx-auto flex items-center justify-center mb-8 drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]">
+                                            <div className="phone-widget relative w-44 h-44 mx-auto flex items-center justify-center mb-8 drop-shadow-xl dark:drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]">
                                                 <svg className="absolute inset-0 w-full h-full" aria-hidden="true">
-                                                    <circle cx="88" cy="88" r="64" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="12" />
-                                                    <circle className="progress-ring" cx="88" cy="88" r="64" fill="none" stroke="#3B82F6" strokeWidth="12" />
+                                                    <circle cx="88" cy="88" r="64" fill="none" className="stroke-slate-200 dark:stroke-white/10" strokeWidth="12" />
+                                                    <circle className="progress-ring" cx="88" cy="88" r="64" fill="none" stroke="#10b981" strokeWidth="12" />
                                                 </svg>
-                                                <div className="text-center z-10 flex flex-col items-center">
-                                                    <span className="counter-val text-4xl font-extrabold tracking-tighter text-white">0</span>
-                                                    <span className="text-[8px] text-blue-200/50 uppercase tracking-[0.1em] font-bold mt-0.5">{metricLabel}</span>
+                                                <div className="scanning-state text-center z-10 flex flex-col items-center">
+                                                    <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center mb-1 shadow-inner border border-emerald-300 dark:border-emerald-700">
+                                                        <svg className="w-6 h-6 text-emerald-600 dark:text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                        </svg>
+                                                    </div>
+                                                    <span className="text-[8px] text-slate-500 dark:text-emerald-200/50 uppercase tracking-[0.1em] font-bold">Scanning...</span>
+                                                </div>
+
+                                                <div className="success-state absolute inset-0 text-center z-20 flex flex-col items-center justify-center scale-0 opacity-0 pointer-events-none">
+                                                    <div className="w-14 h-14 rounded-full bg-emerald-500 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.4)] mb-1">
+                                                        <svg className="w-8 h-8 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    </div>
+                                                    <span className="text-sm text-emerald-600 dark:text-emerald-400 font-extrabold tracking-tight drop-shadow-sm">Present</span>
                                                 </div>
                                             </div>
 
                                             <div className="space-y-3">
-                                                <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
-                                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/5 flex items-center justify-center mr-3 border border-blue-400/20 shadow-inner">
-                                                        <svg className="w-4 h-4 text-blue-400 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg>
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <div className="h-2 w-20 bg-neutral-300 rounded-full mb-2 shadow-inner" />
-                                                        <div className="h-1.5 w-12 bg-neutral-600 rounded-full shadow-inner" />
-                                                    </div>
-                                                </div>
-                                                <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
-                                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/5 flex items-center justify-center mr-3 border border-emerald-400/20 shadow-inner">
-                                                        <svg className="w-4 h-4 text-emerald-400 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                <div className="phone-widget rounded-2xl p-3 flex items-center bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 shadow-md dark:shadow-none">
+                                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-500/20 dark:to-emerald-600/5 flex items-center justify-center mr-3 border border-emerald-200 dark:border-emerald-400/20 shadow-inner">
+                                                        <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                                                         </svg>
                                                     </div>
                                                     <div className="flex-1">
-                                                        <div className="h-2 w-16 bg-neutral-300 rounded-full mb-2 shadow-inner" />
-                                                        <div className="h-1.5 w-24 bg-neutral-600 rounded-full shadow-inner" />
+                                                        <div className="h-2.5 w-24 bg-slate-300 dark:bg-neutral-300 rounded-full mb-2" />
+                                                        <div className="h-1.5 w-16 bg-slate-200 dark:bg-neutral-600 rounded-full" />
+                                                    </div>
+                                                </div>
+
+                                                <div className="phone-widget rounded-2xl p-3 flex items-center bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 shadow-md dark:shadow-none">
+                                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-100 to-sky-50 dark:from-sky-500/20 dark:to-sky-600/5 flex items-center justify-center mr-3 border border-sky-200 dark:border-sky-400/20 shadow-inner">
+                                                        <svg className="w-4 h-4 text-sky-600 dark:text-sky-400 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                                        </svg>
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <div className="h-2.5 w-16 bg-slate-300 dark:bg-neutral-300 rounded-full mb-2" />
+                                                        <div className="h-1.5 w-20 bg-slate-200 dark:bg-neutral-600 rounded-full" />
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-white/20 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
+                                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-slate-800/20 dark:bg-white/20 rounded-full shadow-sm" />
+
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Floating Glass Badges */}
                                 <div className="floating-badge absolute flex top-6 lg:top-12 left-[-15px] lg:left-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
-                                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-blue-500/20 to-blue-900/10 flex items-center justify-center border border-blue-400/30 shadow-inner">
-                                        <span className="text-base lg:text-xl drop-shadow-lg" aria-hidden="true">🔥</span>
+                                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-emerald-500/20 to-emerald-900/10 flex items-center justify-center border border-emerald-400/30 shadow-inner">
+                                        <span className="text-base lg:text-xl drop-shadow-lg" aria-hidden="true">💯</span>
                                     </div>
                                     <div>
-                                        <p className="text-white text-xs lg:text-sm font-bold tracking-tight">1 Year Streak</p>
-                                        <p className="text-blue-200/50 text-[10px] lg:text-xs font-medium">Milestone unlocked</p>
+                                        <p className="text-white text-xs lg:text-sm font-bold tracking-tight">Perfect Attendance</p>
+                                        <p className="text-emerald-200/50 text-[10px] lg:text-xs font-medium">Current month</p>
                                     </div>
                                 </div>
 
                                 <div className="floating-badge absolute flex bottom-12 lg:bottom-20 right-[-15px] lg:right-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
-                                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-indigo-500/20 to-indigo-900/10 flex items-center justify-center border border-indigo-400/30 shadow-inner">
-                                        <span className="text-base lg:text-lg drop-shadow-lg" aria-hidden="true">🤝</span>
+                                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-sky-500/20 to-sky-900/10 flex items-center justify-center border border-sky-400/30 shadow-inner">
+                                        <span className="text-base lg:text-lg drop-shadow-lg" aria-hidden="true">📍</span>
                                     </div>
                                     <div>
-                                        <p className="text-white text-xs lg:text-sm font-bold tracking-tight">Sponsor Update</p>
-                                        <p className="text-blue-200/50 text-[10px] lg:text-xs font-medium">Shared successfully</p>
+                                        <p className="text-white text-xs lg:text-sm font-bold tracking-tight">Auto Check-in</p>
+                                        <p className="text-sky-200/50 text-[10px] lg:text-xs font-medium">Bluetooth synced</p>
                                     </div>
                                 </div>
 
